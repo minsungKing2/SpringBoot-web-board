@@ -8,5 +8,6 @@ public class WebBoardApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebBoardApplication.class, args);
+		//commit test
 	}
 }
