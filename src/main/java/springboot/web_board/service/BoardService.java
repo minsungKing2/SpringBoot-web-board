@@ -1,10 +1,10 @@
-package springboot.service;
+package springboot.web_board.service;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import springboot.dto.BoardDTO;
-import springboot.repository.BoardRepository;
+import springboot.web_board.dto.BoardDTO;
+import springboot.web_board.repository.BoardRepository;
 
 @Service // 서비스 클래스 빈 등록
 @RequiredArgsConstructor
