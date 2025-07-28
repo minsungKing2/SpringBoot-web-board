@@ -11,12 +11,12 @@ import lombok.ToString;
 
 public class BoardDTO {
 
-    private long id;
-    private String boardWriter;
-    private String boardPass;
-    private String boardTitle;
-    private String boardContents;
-    private int boardHits;
-    private String createAt;
+    private long id; // 번호
+    private String boardWriter; // 작성자
+    private String boardPass; // 비밀번호
+    private String boardTitle; // 제목
+    private String boardContents; // 내용
+    private String createdAt; // 작성시간
+    private int boardHits; // 조회수
 
 }

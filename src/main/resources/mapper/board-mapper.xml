@@ -7,4 +7,17 @@
     <!-- parameterType = "board" 는 sql 의 매개변수 타입이 사용자 매개변수 board 라는 뜻임. -->
         insert into board_table(boardTitle, boardWriter, boardPass, boardContents) values(#{boardTitle}, #{boardWriter}, #{boardPass}, #{boardContents})
     </insert>
+    <!-- 작성된 글 리스트 조회-->
+    <select id="findAll" resultType="board">
+            select id, boardTitle, boardWriter, boardHits, date_format(createdAt, "%Y-%m-%d") as createdAt from board_table order by id desc
+    </select>
+    <!-- 조회수 1씩 올림 -->
+    <update id="updateHits" parameterType="Long">
+        update board_table
+        set boardHits = boardHits+1 where id=#{id}
+    </update>
+    <!-- id 값으로 해당 id의 글을 조회 -->
+    <select id="findById" parameterType="Long" resultType="board">
+        select id, boardTitle, boardWriter, boardPass, boardContents, boardHits, date_format(createdAt, "%Y-%m-%d") as createdAt from board_table where id=#{id}
+    </select>
 </mapper>
