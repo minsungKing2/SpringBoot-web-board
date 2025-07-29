@@ -49,11 +49,13 @@
     const listReq = () => {
         location.href = "/list";
     }
+    // 수정 버튼 클릭시 실행되는 함수
     const updateReq = () => {
-
+        location.href = `/update/[[${board.id}]]`;
     }
+    // 삭제 버튼 클릭시 실행되는 함수
     const deleteReq = () => {
-
+        location.href = `/delete/[[${board.id}]]`;
     }
 </script>
 </html>
