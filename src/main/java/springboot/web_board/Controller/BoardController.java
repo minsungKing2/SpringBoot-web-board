@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import springboot.web_board.dto.BoardDTO;
+import springboot.web_board.dto.BoardFileDTO;
 import springboot.web_board.service.BoardService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller // 컨트롤러 클래스라는 것을 스프링이 알 수 있게 함.
@@ -25,11 +27,12 @@ public class BoardController {
     }
 
     @PostMapping("/save") // post 요청을 받아서 해당 메서드로 매핑해줌. -> /save 에서 입력한 글을 DB 에 저장해줌.
-    public String save(BoardDTO boardDTO) {
+    public String save(BoardDTO boardDTO) throws IOException {
         boardService.save(boardDTO);
         return "redirect:/list";
         // 글을 작성하면 리다이렉션이 되도록 반환타입을 String 으로 변경하고, /list url 로 리다이렉션 해줌.
         // 글 작성이 성공하면, localhost:8080/list 로 페이지가 넘어간다.
+        // IOException 이 발생할 수 있으므로 예외를 throws 로 던진다.
     }
 
     @GetMapping("/list")
@@ -43,9 +46,16 @@ public class BoardController {
     public String findById(@PathVariable("id") Long id, Model model) {
         // 조회수 처리
         boardService.updateHits(id);
+
         // 상세내용 가져오기
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
+
+        // 파일첨부
+        if (boardDTO.getFileAttached() == 1) {
+            List<BoardFileDTO> boardFileDTOList = boardService.findFile(id);
+            model.addAttribute("boardFileDTOList", boardFileDTOList);
+        }
         return "detail";
     }
 
@@ -74,4 +84,5 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/list";
     }
+
 }
