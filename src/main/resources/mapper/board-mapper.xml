@@ -3,9 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Board">
     <!-- sql문이 작성되는 공간  CRUD를 작성할 공간-->
-    <insert id="save" parameterType="board">
+    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
     <!-- parameterType = "board" 는 sql 의 매개변수 타입이 사용자 매개변수 board 라는 뜻임. -->
-        insert into board_table(boardTitle, boardWriter, boardPass, boardContents) values(#{boardTitle}, #{boardWriter}, #{boardPass}, #{boardContents})
+        insert into board_table(boardTitle, boardWriter, boardPass, boardContents, fileAttached) values(#{boardTitle}, #{boardWriter}, #{boardPass}, #{boardContents}, #{fileAttached})
     </insert>
     <!-- 작성된 글 리스트 조회-->
     <select id="findAll" resultType="board">
@@ -18,7 +18,7 @@
     </update>
     <!-- id 값으로 해당 id의 글을 조회 -->
     <select id="findById" parameterType="Long" resultType="board">
-        select id, boardTitle, boardWriter, boardPass, boardContents, boardHits, date_format(createdAt, "%Y-%m-%d") as createdAt from board_table where id=#{id}
+        select id, boardTitle, boardWriter, boardPass, boardContents, boardHits, fileAttached, date_format(createdAt, "%Y-%m-%d") as createdAt from board_table where id=#{id}
     </select>
     <!-- update 쿼리 -->
     <update id="update" parameterType="board">
@@ -31,4 +31,12 @@
         delete from board_table
         where id=#{id}
     </delete>
+    <!-- board_file_table 에 데이터를 저장한다 -->
+    <insert id="saveFile" parameterType="boardFile">
+        insert into board_file_table(originalFileName, storedFileName, boardId) values (#{originalFileName}, #{storedFileName}, #{boardId})
+    </insert>
+    <!-- board_file_table 에 데이터를 가져온다 -->
+    <select id="findFIle" parameterType="Long" resultType="boardFile">
+        select * from board_file_table where boardId=#{id}
+    </select>
 </mapper>
