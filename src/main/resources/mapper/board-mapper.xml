@@ -36,7 +36,7 @@
         insert into board_file_table(originalFileName, storedFileName, boardId) values (#{originalFileName}, #{storedFileName}, #{boardId})
     </insert>
     <!-- board_file_table 에 데이터를 가져온다 -->
-    <select id="findFIle" parameterType="Long" resultType="boardFile">
+    <select id="findFile" parameterType="Long" resultType="boardFile">
         select * from board_file_table where boardId=#{id}
     </select>
 </mapper>
